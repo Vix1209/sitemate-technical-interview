@@ -1,6 +1,5 @@
-import BlogForm from "@/components/Dashboard/ForumForm";
+import BlogForm from "@/components/Dashboard/PostForm";
 import { TableDemo } from "@/components/Dashboard/Table";
-import Image from "next/image";
 
 export default function Home() {
   return (
