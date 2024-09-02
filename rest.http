@@ -1,0 +1,23 @@
+###
+POST http://localhost:3000/blog
+Content-Type: application/json
+
+{
+    "title" : "Uchenna",
+    "description" : "Ofor"
+}
+
+###
+GET http://localhost:3000/blog
+
+###
+DELETE http://localhost:3000/blog/2
+
+###
+PATCH http://localhost:3000/blog/1
+Content-Type: application/json
+
+{
+    "title" : "Tochi",
+    "description" : "Ukwuoma"
+}
