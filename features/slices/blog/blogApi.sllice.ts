@@ -1,5 +1,5 @@
 import { apiSlice } from "..";
-interface blogProp {
+interface BlogProp {
   id?: string;
   title: string;
   description: string;
@@ -7,7 +7,7 @@ interface blogProp {
 
 export const blogApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getBlog: builder.query<blogProp[], void>({
+    getBlog: builder.query<BlogProp[], void>({
       query: () => ({
         url: "/blog",
         method: "GET",
@@ -24,28 +24,31 @@ export const blogApiSlice = apiSlice.injectEndpoints({
           : ["Blog"],
     }),
 
-    CreateBlog: builder.mutation<blogProp, blogProp>({
+    CreateBlog: builder.mutation<BlogProp, BlogProp>({
       query: (body) => ({
         url: "/blog",
         method: "POST",
         body,
       }),
+      invalidatesTags: ["Blog"],
     }),
 
-    UpdateBlog: builder.mutation<blogProp, blogProp>({
+    UpdateBlog: builder.mutation<BlogProp, BlogProp>({
       query: ({ title, description, id }) => ({
         url: `/blog/${id}`,
         method: "PATCH",
         body: { title, description },
       }),
+      invalidatesTags: ["Blog"],
     }),
 
-    DeleteBlog: builder.mutation<blogProp, blogProp>({
-      query: ({ description, title, id }) => ({
+    DeleteBlog: builder.mutation<BlogProp, string>({
+      query: (id) => ({
         url: `/blog/${id}`,
         method: "DELETE",
-        body: { title, description },
+        body: id,
       }),
+      invalidatesTags: ["Blog"],
     }),
   }),
 });

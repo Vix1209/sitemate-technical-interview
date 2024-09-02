@@ -14,21 +14,30 @@ import createForumFormSchema from "@/schema";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useUpdateBlogMutation } from "@/features/slices/blog/blogApi.sllice";
+import {
+  useUpdateBlogMutation,
+  useGetBlogQuery,
+} from "@/features/slices/blog/blogApi.sllice";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
+import { useParams } from "next/navigation";
 
 const UpdateForm = () => {
+  const searchParams = useParams();
+  const query = String(searchParams.slug);
   const form = useForm<z.infer<typeof createForumFormSchema>>({
     resolver: zodResolver(createForumFormSchema),
     defaultValues: {
       description: "",
     },
   });
-  const Router = useRouter();
   const [postBlog, { isLoading }] = useUpdateBlogMutation();
   const onSubmit = async (values: z.infer<typeof createForumFormSchema>) => {
-    await postBlog(values);
+    await postBlog({
+      title: values.title,
+      description: values.description,
+      id: query,
+    });
   };
 
   return (
